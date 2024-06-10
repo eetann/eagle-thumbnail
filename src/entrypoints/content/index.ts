@@ -1,10 +1,10 @@
 import App from "./App.svelte";
-import { waitForElm } from "./waitForElement";
+import { waitForElement } from "./waitForElement";
 
 export default defineContentScript({
 	matches: ["https://*.google.co.jp/*"],
 	async main(ctx) {
-		const anchor = await waitForElm("[role='navigation']");
+		const anchor = await waitForElement("[role='navigation']");
 		const ui = createIntegratedUi(ctx, {
 			position: "overlay",
 			alignment: "top-right",

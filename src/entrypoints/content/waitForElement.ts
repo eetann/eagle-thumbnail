@@ -1,4 +1,4 @@
-export async function waitForElm(
+export async function waitForElement(
 	selector: string,
 ): Promise<Element | undefined> {
 	// NOTE: https://phuoc.ng/collection/html-dom/waiting-for-an-element-to-become-available/
