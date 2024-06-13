@@ -1,8 +1,10 @@
+import "../../assets/app.css";
 import App from "./App.svelte";
 import { waitForElement } from "./waitForElement";
 
 export default defineContentScript({
 	matches: ["https://www.youtube.com/*"],
+	cssInjectionMode: "ui",
 	async main(ctx) {
 		console.log("hello content script");
 		// TODO: ポップアップからも実行
@@ -10,7 +12,8 @@ export default defineContentScript({
 		if (typeof anchor === "undefined") {
 			return;
 		}
-		const ui = createIntegratedUi(ctx, {
+		const ui = await createShadowRootUi(ctx, {
+			name: "eagle-thumbnail",
 			position: "inline",
 			anchor: anchor,
 			append: "first",
