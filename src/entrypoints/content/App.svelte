@@ -1,5 +1,5 @@
 <script lang="ts">
-  import "../popup/app.css";
+  import "../../assets/app.css";
   import svelteLogo from "../../assets/svelte.svg";
   import Counter from "../../lib/Counter.svelte";
 </script>
@@ -10,7 +10,7 @@
       <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
     </a>
   </div>
-  <h1>WXT + Svelte</h1>
+  <h1 class="bg-red-600 font-extrabold">WXT + Svelte</h1>
 
   <div class="card">
     <Counter />
