@@ -1,47 +1,26 @@
 export async function waitForElement(
 	selector: string,
 ): Promise<Element | undefined> {
-	// NOTE: https://phuoc.ng/collection/html-dom/waiting-for-an-element-to-become-available/
-	// https://macarthur.me/posts/use-mutation-observer-to-handle-nodes-that-dont-exist-yet/
-	// setIntervalだと要素が多いと大変っぽい
 	return new Promise((resolve) => {
-		const elm = document.querySelector(selector);
+		let elm = document.querySelector(selector);
 		if (elm) {
-			resolve(elm);
-			return;
+			console.log("最初に見つかった");
+			return resolve(elm);
 		}
-		const observer = new MutationObserver((mutations) => {
-			for (const mutation of mutations) {
-				if (mutation.addedNodes.length === 0) {
-					continue;
-				}
-				for (const node of mutation.addedNodes) {
-					if (!(node instanceof HTMLElement)) continue;
-					if (node.matches(selector)) {
-						observer.disconnect();
-						clearTimeout(timeout);
-						resolve(node);
-						return;
-					}
-				}
+
+		const timer = setInterval(() => {
+			elm = document.querySelector(selector);
+			if (elm) {
+				clearInterval(timer);
+				clearTimeout(timeout);
+				console.log("途中で見つかった");
+				return resolve(elm);
 			}
-			// const elm = document.querySelector(selector);
-			// if (elm) {
-			// 	observer.disconnect();
-			//      clearTimeout(timeout);
-			// 	resolve(elm);
-			// 	return;
-			// }
-		});
+		}, 500);
 		const timeout = setTimeout(() => {
-			observer.disconnect();
-			clearTimeout(timeout);
-			resolve(undefined);
-			return;
-		}, 15000);
-		observer.observe(document.body, {
-			childList: true,
-			subtree: true,
-		});
+			clearInterval(timer);
+			console.log("見つからなかった");
+			return resolve(undefined);
+		}, 10000);
 	});
 }
