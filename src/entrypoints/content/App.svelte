@@ -15,7 +15,8 @@
   }
 </script>
 
-<main id="app" class="my-4" data-theme="dim">
+<div id="crxEagleThumbnail" class="my-4">
+  <div class="bg-cyan-300">aaaaaa</div>
   <div class="card bg-base-100">
     {#if videoId}
       <figure>
@@ -37,10 +38,4 @@
     {/if}
   </div>
   <button on:click={onclick} class="btn btn-lg btn-primary">Save</button>
-</main>
-
-<style>
-  #app {
-    font-size: 16px;
-  }
-</style>
+</div>

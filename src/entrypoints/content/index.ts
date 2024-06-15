@@ -4,7 +4,6 @@ import { waitForElement } from "./waitForElement";
 
 export default defineContentScript({
 	matches: ["https://www.youtube.com/*"],
-	cssInjectionMode: "ui",
 	async main(ctx) {
 		if (!location.href.indexOf("watch")) {
 			console.log("no watch");
@@ -16,8 +15,8 @@ export default defineContentScript({
 		if (typeof anchor === "undefined") {
 			return;
 		}
-		const ui = await createShadowRootUi(ctx, {
-			name: "eagle-thumbnail",
+		const ui = createIntegratedUi(ctx, {
+			tag: "crx-eagle-thumbnail",
 			position: "inline",
 			anchor: anchor,
 			append: "first",
