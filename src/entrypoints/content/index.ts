@@ -1,4 +1,4 @@
-import "../../assets/app.css";
+import "@/assets/app.css";
 import App from "./App.svelte";
 import { waitForElement } from "./waitForElement";
 
@@ -6,6 +6,10 @@ export default defineContentScript({
 	matches: ["https://www.youtube.com/*"],
 	cssInjectionMode: "ui",
 	async main(ctx) {
+		if (!location.href.indexOf("watch")) {
+			console.log("no watch");
+			return;
+		}
 		console.log("hello content script");
 		// TODO: ポップアップからも実行
 		const anchor = await waitForElement("#secondary-inner");
