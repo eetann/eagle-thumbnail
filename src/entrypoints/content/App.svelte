@@ -1,37 +1,46 @@
 <script lang="ts">
-  import svelteLogo from "../../assets/svelte.svg";
-  import Counter from "../../lib/Counter.svelte";
+  import { save } from "@/lib/saveEagle";
+  let videoId = new URL(location.href).searchParams.get("v");
+
+  let errMsg = "";
+
+  async function onclick() {
+    try {
+      errMsg = "";
+      await save();
+    } catch (e) {
+      /* handle error */
+      errMsg = e as string;
+    }
+  }
 </script>
 
-<main id="app">
-  <div>
-    <a href="https://svelte.dev" target="_blank" rel="noreferrer">
-      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
-    </a>
-  </div>
-  <h1 class="bg-cyan-600 font-extrabold">WXT + Svelte</h1>
+<main id="app" class="my-4" data-theme="dim">
+  <div class="card bg-base-100">
+    {#if videoId}
+      <figure>
+        <img
+          src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+          alt="サムネイル"
+        />
+      </figure>
 
-  <div class="card">
-    <Counter />
+      <div class="card-body">
+        {#if errMsg !== ""}
+          <p>{errMsg}</p>
+        {/if}
+        <div class="card-actions justify-end">
+          <button on:click={onclick} class="btn btn-md btn-primary">Save</button
+          >
+        </div>
+      </div>
+    {/if}
   </div>
-
-  <p class="read-the-docs">Click on the WXT and Svelte logos to learn more</p>
+  <button on:click={onclick} class="btn btn-lg btn-primary">Save</button>
 </main>
 
 <style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
-  }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #54bc4ae0);
-  }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
-  }
-  .read-the-docs {
-    color: #888;
+  #app {
+    font-size: 16px;
   }
 </style>
