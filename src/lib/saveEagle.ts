@@ -4,8 +4,12 @@ const apiTokenStorage = storage.defineItem<string>("local:apiTokenStorage", {
 	defaultValue: "",
 });
 
-async function getApiToken() {
+export async function getApiToken() {
 	return await apiTokenStorage.getValue();
+}
+
+export async function setApiToken(token: string) {
+	return await apiTokenStorage.setValue(token);
 }
 
 export async function save() {
