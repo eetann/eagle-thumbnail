@@ -21,6 +21,7 @@ export default defineContentScript({
 			anchor: anchor,
 			append: "first",
 			onMount: (container) => {
+				container.id = "crxEagleThumbnail";
 				const app = new App({
 					target: container,
 				});

@@ -1,6 +1,8 @@
 <script lang="ts">
   import { save } from "@/lib/saveEagle";
   let videoId = new URL(location.href).searchParams.get("v");
+  const title =
+    document.getElementsByName("title")[0]?.getAttribute("content") ?? "";
 
   let errMsg = "";
 
@@ -15,14 +17,13 @@
   }
 </script>
 
-<div id="crxEagleThumbnail" class="my-4">
-  <div class="bg-cyan-300">aaaaaa</div>
+<div class="mb-6">
   <div class="card bg-base-100">
     {#if videoId}
       <figure>
         <img
           src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
-          alt="サムネイル"
+          alt={title}
         />
       </figure>
 
@@ -37,5 +38,4 @@
       </div>
     {/if}
   </div>
-  <button on:click={onclick} class="btn btn-lg btn-primary">Save</button>
 </div>
