@@ -9,7 +9,11 @@
   async function onclick() {
     try {
       errMsg = "";
-      await save();
+      await save(
+        title,
+        `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
+        location.href,
+      );
     } catch (e) {
       /* handle error */
       errMsg = e as string;
@@ -32,8 +36,14 @@
           <p>{errMsg}</p>
         {/if}
         <div class="card-actions justify-end">
-          <button on:click={onclick} class="btn btn-md btn-primary">Save</button
+          <div
+            class="tooltip before:text-lg"
+            data-tip="Save quickly without popup"
           >
+            <button on:click={onclick} class="btn btn-lg btn-primary"
+              >Save</button
+            >
+          </div>
         </div>
       </div>
     {/if}
