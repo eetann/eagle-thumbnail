@@ -54,7 +54,6 @@
         bind:value={typingApiToken}
       />
     </label>
-    <!-- TODO: cvaとかで書き換える -->
     <button
       on:click={onclick}
       class={saveButton({

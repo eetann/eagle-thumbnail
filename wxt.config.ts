@@ -6,6 +6,7 @@ import path from "node:path";
 export default defineConfig({
 	manifest: {
 		name: "Eagle thumbnail",
+		description: "show thumbnail at YouTube for Eagle",
 		version: "1.0.0",
 		permissions: ["storage"],
 	},
