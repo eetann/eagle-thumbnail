@@ -11,7 +11,7 @@ export default defineContentScript({
 		}
 		console.log("hello content script");
 		// TODO: ポップアップからも実行
-		const anchor = await waitForElement("#secondary-inner");
+		const anchor = await waitForElement("#secondary");
 		if (typeof anchor === "undefined") {
 			return;
 		}
