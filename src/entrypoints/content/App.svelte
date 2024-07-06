@@ -26,6 +26,7 @@
     {#if videoId}
       <figure>
         <img
+          id="eagleThumbnailImage"
           src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
           alt={title}
         />
@@ -36,10 +37,7 @@
           <p>{errMsg}</p>
         {/if}
         <div class="card-actions justify-end">
-          <div
-            class="tooltip before:text-lg"
-            data-tip="Save quickly without popup"
-          >
+          <div class="tooltip before:text-lg" data-tip="Save to Eagle">
             <button on:click={onclick} class="btn btn-lg btn-primary"
               >Save</button
             >
