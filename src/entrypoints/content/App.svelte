@@ -4,25 +4,21 @@
   const title =
     document.getElementsByName("title")[0]?.getAttribute("content") ?? "";
 
-  let errMsg = "";
-
   async function onclick() {
     try {
-      errMsg = "";
       await save(
         title,
         `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
         location.href,
       );
     } catch (e) {
-      /* handle error */
-      errMsg = e as string;
+      console.log(e);
     }
   }
 </script>
 
 <div class="mb-6">
-  <div class="card bg-base-100">
+  <div class="card bg-base-100 card-compact">
     {#if videoId}
       <figure>
         <img
@@ -33,9 +29,6 @@
       </figure>
 
       <div class="card-body">
-        {#if errMsg !== ""}
-          <p>{errMsg}</p>
-        {/if}
         <div class="card-actions justify-end">
           <div class="tooltip before:text-lg" data-tip="Save to Eagle">
             <button on:click={onclick} class="btn btn-lg btn-primary"
