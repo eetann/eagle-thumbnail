@@ -38,8 +38,9 @@
 
 <div class="mx-6 w-96">
   <div class="space-y-4">
-    <label for="" class=" form-control w-full max-w-lg"
-      ><div class="label">
+    <label for="" class=" form-control w-full max-w-lg">
+      <!-- TODO: 必要なければ消す -->
+      <div class="label">
         <span class="label-text">API Token</span>
         {#if savedApiToken !== typingApiToken}
           <span class="label-text-alt">

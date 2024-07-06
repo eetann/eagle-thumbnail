@@ -11,6 +11,7 @@ export default defineContentScript({
 		}
 		console.log("hello content script");
 		// TODO: ポップアップからも実行
+		// TODO: vidIQの影響を受けないようにする
 		const anchor = await waitForElement("#secondary");
 		if (typeof anchor === "undefined") {
 			return;
