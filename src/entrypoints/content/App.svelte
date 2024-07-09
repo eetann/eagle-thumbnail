@@ -1,8 +1,27 @@
 <script lang="ts">
   import { save } from "@/lib/saveEagle";
   let videoId = new URL(location.href).searchParams.get("v");
-  const title =
+  let title =
     document.getElementsByName("title")[0]?.getAttribute("content") ?? "";
+  let previousURL = location.href;
+
+  // YouTubeはSPA = 別の動画に移ってもリロードされないため手動でURLの変更を検知する
+  // browser.tabsはcontentだと使えない
+  const observer = new MutationObserver(() => {
+    const nowURL = location.href;
+    if (previousURL === nowURL) {
+      return;
+    }
+    console.log("EagleThumbnail detect CHANGE!");
+    videoId = new URL(location.href).searchParams.get("v");
+    title =
+      document.getElementsByName("title")[0]?.getAttribute("content") ?? "";
+  });
+  observer.observe(document.head, {
+    childList: true,
+    attributes: true,
+    attributeFilter: ["href"],
+  });
 
   async function onclick() {
     try {
