@@ -25,8 +25,6 @@
     });
     observer.observe(document.getElementsByTagName("title")[0], {
       childList: true,
-      attributes: true,
-      attributeFilter: ["href"],
     });
     return () => observer.disconnect();
   });
