@@ -1,15 +1,18 @@
 <script lang="ts">
   import { save } from "@/lib/saveEagle";
+  import { getLargestImage } from "@/lib/getImage";
   import { onMount } from "svelte";
 
   let videoId = "";
   let title = "";
+  let imageURL = "";
   let previousURL = location.href;
 
-  function updateVideoInfo() {
+  async function updateVideoInfo() {
     const urlParams = new URL(location.href).searchParams;
     videoId = urlParams.get("v") ?? "";
     title = document.title;
+    imageURL = await getLargestImage(videoId);
   }
 
   onMount(() => {
@@ -30,15 +33,11 @@
   });
 
   async function onclick() {
-    if (videoId === "" || title === "") {
+    if (videoId === "" || title === "" || imageURL === "") {
       return;
     }
     try {
-      await save(
-        title,
-        `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
-        location.href,
-      );
+      await save(title, imageURL, location.href);
     } catch (e) {
       console.log("Failed to save to Eagle", e);
     }
@@ -47,13 +46,9 @@
 
 <div class="mb-6">
   <div class="card bg-base-100 card-compact">
-    {#if videoId}
+    {#if imageURL}
       <figure>
-        <img
-          id="eagleThumbnailImage"
-          src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
-          alt={title}
-        />
+        <img id="eagleThumbnailImage" src={imageURL} alt={title} />
       </figure>
 
       <div class="card-body">
