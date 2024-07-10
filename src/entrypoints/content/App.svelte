@@ -47,7 +47,7 @@
 <div class="mb-6">
   <div class="card bg-base-100 card-compact">
     {#if imageURL}
-      <figure>
+      <figure class="pt-4 px-4">
         <img id="eagleThumbnailImage" src={imageURL} alt={title} />
       </figure>
 
