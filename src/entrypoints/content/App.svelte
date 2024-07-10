@@ -9,9 +9,7 @@
   function updateVideoInfo() {
     const urlParams = new URL(location.href).searchParams;
     videoId = urlParams.get("v") ?? "";
-    title =
-      document.querySelector("meta[name='title']")?.getAttribute("content") ??
-      "";
+    title = document.title;
   }
 
   onMount(() => {
@@ -25,7 +23,7 @@
         updateVideoInfo();
       }
     });
-    observer.observe(document.head, {
+    observer.observe(document.getElementsByTagName("title")[0], {
       childList: true,
       attributes: true,
       attributeFilter: ["href"],
