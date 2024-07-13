@@ -13,11 +13,15 @@ export async function setApiToken(token: string) {
 	return await apiTokenStorage.setValue(token);
 }
 
-export async function save(name: string, srcURL: string, websiteURL: string) {
+async function postToEagle(
+	itemTitle: string,
+	imageURL: string,
+	websiteURL: string,
+) {
 	const data = {
 		type: "image",
-		title: name,
-		src: srcURL,
+		title: itemTitle,
+		src: imageURL,
 		url: websiteURL,
 	};
 
@@ -30,8 +34,28 @@ export async function save(name: string, srcURL: string, websiteURL: string) {
 	};
 
 	const apiURL = "http://localhost:41593";
-	fetch(apiURL, requestOptions)
-		.then((response) => response.json())
-		.then((result) => console.log(result))
-		.catch((error) => console.log("error", error));
+	try {
+		await fetch(apiURL, requestOptions);
+	} catch (e) {
+		console.log("Failed to save Eagle", e);
+	}
+}
+
+export async function save(
+	videoTitle: string,
+	imageURL: string,
+	videoId: string,
+) {
+	// TODO: ここで再生リストのパラメータを消すかどうか分岐する
+	const websiteConvertedURL = `https://www.youtube.com/watch?v=${videoId}`;
+
+	const authorName =
+		document
+			.querySelector("span[itemprop='author'] link[itemprop='name']")
+			?.getAttribute("content") ?? "";
+
+	// TODO: オプションでメモにする
+	const itemTitle = `${videoTitle.replace(/ - YouTube$/, "")} by ${authorName}`;
+
+	await postToEagle(itemTitle, imageURL, websiteConvertedURL);
 }

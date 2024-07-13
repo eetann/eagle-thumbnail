@@ -37,7 +37,7 @@
       return;
     }
     try {
-      await save(title, imageURL, location.href);
+      await save(title, imageURL, videoId);
     } catch (e) {
       console.log("Failed to save to Eagle", e);
     }
