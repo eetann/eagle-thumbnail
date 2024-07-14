@@ -14,7 +14,7 @@
   });
   let typingApiToken = "";
   let savedApiToken = "";
-  let noticeApiToken = "";
+  let noticeSaved = "";
 
   onMount(async () => {
     typingApiToken = await getApiToken();
@@ -25,9 +25,9 @@
     try {
       await setApiToken(typingApiToken);
       savedApiToken = typingApiToken;
-      noticeApiToken = "API Token Saved!";
+      noticeSaved = "Saved!";
       setTimeout(() => {
-        noticeApiToken = "";
+        noticeSaved = "";
       }, 3000);
     } catch (e) {
       /* handle error */
@@ -39,21 +39,18 @@
 <div class="mx-6 w-96">
   <div class="space-y-4">
     <label for="" class=" form-control w-full max-w-lg">
-      <!-- TODO: 必要なければ消す -->
+      <!-- タイトル -->
       <div class="label">
-        <span class="label-text">API Token</span>
-        {#if savedApiToken !== typingApiToken}
-          <span class="label-text-alt">
-            <div class="badge badge-primary">unsaved</div>
-          </span>
-        {/if}
+        <span class="label-text">Title</span>
       </div>
-      <input
-        type="text"
-        placeholder="Type here"
-        class="input input-bordered w-full max-w-lg"
-        bind:value={typingApiToken}
-      />
+      <textarea class="textarea textarea-bordered h-24" placeholder="Title Here"
+      ></textarea>
+      <!-- メモ -->
+      <div class="label">
+        <span class="label-text">Memo</span>
+      </div>
+      <textarea class="textarea textarea-bordered h-24" placeholder="Memo Here"
+      ></textarea>
     </label>
     <button
       on:click={onclick}
@@ -63,10 +60,10 @@
     >
   </div>
   <!-- toast -->
-  {#if noticeApiToken !== ""}
+  {#if noticeSaved !== ""}
     <div class="toast toast-top toast-end" in:fly={{ y: -20 }}>
       <div class="alert alert-success">
-        <span>{noticeApiToken}</span>
+        <span>{noticeSaved}</span>
       </div>
     </div>
   {/if}
