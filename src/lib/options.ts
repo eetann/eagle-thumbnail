@@ -1,6 +1,9 @@
 import * as v from "valibot";
 import { storage } from "wxt/storage";
 
+export const PATTERN_VIDEO_TITLE = "VIDEO_TITLE";
+export const PATTERN_CHANNEL_NAME = "CHANNEL_NAME";
+
 const EagleItemTemplateSchema = v.object({
 	// 字数制限は無いっぽい
 	// https://api.eagle.cool/item/add-from-url
@@ -30,7 +33,7 @@ export const eagleItemTemplateStorage = storage.defineItem<EagleItemTemplate>(
 	"local:eagleItemTemplate",
 	{
 		defaultValue: {
-			title: "TITLE_HERE by CHANNEL_HERE",
+			title: "VIDEO_TITLE by CHANNEL_NAME",
 			annotation: "",
 		},
 	},

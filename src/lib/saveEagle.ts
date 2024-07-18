@@ -1,29 +1,38 @@
 import { storage } from "wxt/storage";
-
-// TODO: 必要なければ消す
-const apiTokenStorage = storage.defineItem<string>("local:apiTokenStorage", {
-	defaultValue: "",
-});
-
-export async function getApiToken() {
-	return await apiTokenStorage.getValue();
-}
-
-export async function setApiToken(token: string) {
-	return await apiTokenStorage.setValue(token);
-}
+import {
+	PATTERN_CHANNEL_NAME,
+	PATTERN_VIDEO_TITLE,
+	eagleItemTemplateStorage,
+} from "./options";
 
 async function postToEagle(
 	itemTitle: string,
 	imageURL: string,
 	websiteURL: string,
+	annotation: string,
 ) {
 	const data = {
 		type: "image",
 		title: itemTitle,
 		src: imageURL,
 		url: websiteURL,
+		// TODO: annotationが無効なのか拡張機能関係なくconsoleでAPIを叩いてみる
+		// TODO: 無理ならクリップボードに入れるオプションを追加
+		annotation: annotation,
 	};
+	// annotationだけ反映されないため、存在すればクリップボードに入れる
+	if (annotation !== "") {
+		try {
+			const item = [
+				new ClipboardItem({
+					"text/plain": new Blob([annotation], { type: "text/plain" }),
+				}),
+			];
+			await navigator.clipboard.write(item);
+		} catch (e) {
+			console.log("Failed to copy annotation text", e);
+		}
+	}
 
 	const requestOptions: RequestInit = {
 		method: "POST",
@@ -49,13 +58,20 @@ export async function save(
 	// TODO: ここで再生リストのパラメータを消すかどうか分岐する
 	const websiteConvertedURL = `https://www.youtube.com/watch?v=${videoId}`;
 
-	const authorName =
+	const channelName =
 		document
 			.querySelector("span[itemprop='author'] link[itemprop='name']")
 			?.getAttribute("content") ?? "";
 
-	// TODO: オプションでメモにする
-	const itemTitle = `${videoTitle.replace(/ - YouTube$/, "")} by ${authorName}`;
+	const { title: titleTemplate, annotation: annotationTemplate } =
+		await eagleItemTemplateStorage.getValue();
 
-	await postToEagle(itemTitle, imageURL, websiteConvertedURL);
+	const itemTitle = titleTemplate
+		.replace(PATTERN_VIDEO_TITLE, videoTitle.replace(/ - YouTube$/, ""))
+		.replace(PATTERN_CHANNEL_NAME, channelName);
+	const itemAnnotation = annotationTemplate
+		.replace(PATTERN_VIDEO_TITLE, videoTitle.replace(/ - YouTube$/, ""))
+		.replace(PATTERN_CHANNEL_NAME, channelName);
+
+	await postToEagle(itemTitle, imageURL, websiteConvertedURL, itemAnnotation);
 }
