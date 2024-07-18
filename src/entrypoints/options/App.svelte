@@ -1,25 +1,20 @@
 <script lang="ts">
   import {
+    PATTERN_CHANNEL_NAME,
+    PATTERN_VIDEO_TITLE,
     eagleItemTemplateStorage,
     parseEagleItemTemplate,
   } from "@/lib/options";
   import { onMount } from "svelte";
   import { fly } from "svelte/transition";
-  import { tv } from "tailwind-variants";
-  const saveButton = tv({
-    base: "btn",
-    variants: {
-      state: {
-        saved: "",
-        unsaved: "btn-primary",
-      },
-    },
-  });
+  import TextCanCopy from "./TextCanCopy.svelte";
   let title = "";
   let annotation = "";
   let firstTitle = "";
   let firstAnnotation = "";
   $: unSaved = title !== firstTitle || annotation !== firstAnnotation;
+  let isSaving = false;
+
   let noticeSaved = "";
   let errorMessage = "";
 
@@ -30,9 +25,12 @@
   });
 
   async function onclick() {
+    if (isSaving) return; // 複数回クリックの禁止
+    isSaving = true;
+
     try {
       errorMessage = "";
-      errorMessage = await parseEagleItemTemplate({ title, annotation });
+      errorMessage = parseEagleItemTemplate({ title, annotation });
       if (errorMessage === "") {
         await eagleItemTemplateStorage.setValue({ title, annotation });
         noticeSaved = "Saved!";
@@ -44,6 +42,8 @@
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      isSaving = false;
     }
   }
 </script>
@@ -52,14 +52,22 @@
   <div class="space-y-4">
     <div class="flex items-center justify-between">
       <span class="text-xl">Eagle Item Template</span>
-      {#if unSaved}
-        <span class="label-text-alt">
-          <div class="badge badge-primary">unsaved</div>
-        </span>
-      {/if}
     </div>
-    <!-- TODO: コピーボタンの設置 -->
-    <!-- TODO: 説明の設置 -->
+    <div class="text-base flex flex-col gap-2">
+      <p>
+        This is a template for text that is automatically entered when saving to
+        Eagle.
+      </p>
+      <p>The following two will be replaced.</p>
+      <ul class="list-disc pl-6">
+        <li>
+          <TextCanCopy text={PATTERN_VIDEO_TITLE} /> = the title of the video
+        </li>
+        <li>
+          <TextCanCopy text={PATTERN_CHANNEL_NAME} /> = the channel name
+        </li>
+      </ul>
+    </div>
     <label for="" class=" form-control w-full max-w-lg">
       <!-- タイトル -->
       <div class="label">
@@ -76,17 +84,22 @@
       </div>
       <textarea bind:value={annotation} class="textarea textarea-bordered h-24"
       ></textarea>
+      <div class="label">
+        <span class="label-text-alt text-warning">
+          Annotation is written to the clipboard. Paste it yourself.
+        </span>
+      </div>
     </label>
     {#if errorMessage}
       <p class="text-error text-base">{errorMessage}</p>
     {/if}
-    <div></div>
-    <button
-      on:click={onclick}
-      class={saveButton({
-        state: unSaved ? "unsaved" : "saved",
-      })}>Button</button
-    >
+    <!-- ボタン -->
+    <div class="indicator">
+      {#if unSaved}
+        <span class="indicator-item badge badge-primary">unsaved</span>
+      {/if}
+      <button on:click={onclick} class="btn">Button</button>
+    </div>
   </div>
   <!-- toast -->
   {#if noticeSaved !== ""}
