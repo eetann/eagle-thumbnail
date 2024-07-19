@@ -23,7 +23,7 @@ module.exports = {
 	plugins: {
 		tailwindcss: {},
 		"postcss-prefix-selector": {
-			prefix: "#crxEagleThumbnail",
+			prefix: "#crxThumbnailToEagle",
 			transform: transformSelector,
 		},
 		autoprefixer: {},

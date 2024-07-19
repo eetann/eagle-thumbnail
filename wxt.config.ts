@@ -5,7 +5,7 @@ import path from "node:path";
 // See https://wxt.dev/api/config.html
 export default defineConfig({
 	manifest: {
-		name: "Eagle thumbnail",
+		name: "Thumbnail To Eagle",
 		description: "show thumbnail at YouTube for Eagle",
 		version: "1.0.0",
 		permissions: ["storage"],

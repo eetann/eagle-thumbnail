@@ -17,12 +17,12 @@ export default defineContentScript({
 			return;
 		}
 		const ui = createIntegratedUi(ctx, {
-			tag: "crx-eagle-thumbnail",
+			tag: "crx-thumbnail-to-eagle",
 			position: "inline",
 			anchor: anchor,
 			append: "first",
 			onMount: (container) => {
-				container.id = "crxEagleThumbnail";
+				container.id = "crxThumbnailToEagle";
 				const app = new App({
 					target: container,
 				});

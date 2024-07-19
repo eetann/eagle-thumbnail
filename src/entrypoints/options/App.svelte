@@ -49,9 +49,10 @@
 </script>
 
 <div class="mx-6 w-96">
+  <h1 class="text-3xl mb-6">Thumbnail To Eagle</h1>
   <div class="space-y-4">
     <div class="flex items-center justify-between">
-      <span class="text-xl">Eagle Item Template</span>
+      <span class="text-xl">Template</span>
     </div>
     <div class="text-base flex flex-col gap-2">
       <p>
@@ -104,7 +105,7 @@
   <!-- toast -->
   {#if noticeSaved !== ""}
     <div class="toast toast-top toast-start" in:fly={{ y: -20 }}>
-      <div class="alert alert-success">
+      <div class="alert alert-success text-base">
         <span>{noticeSaved}</span>
       </div>
     </div>
