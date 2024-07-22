@@ -1,7 +1,9 @@
 <script lang="ts">
   import { save } from "@/lib/saveEagle";
   import { getLargestImage } from "@/lib/getImage";
+  import { sendMessage } from "@/lib/message";
   import { onMount } from "svelte";
+  import Icon from "@iconify/svelte";
 
   let videoId = "";
   let title = "";
@@ -52,10 +54,20 @@
       </figure>
 
       <div class="card-body">
-        <div class="card-actions justify-end">
+        <div class="card-actions justify-between">
+          <button
+            on:click={() => {
+              sendMessage("openOptionsPage", undefined);
+            }}
+            class="btn btn-lg text-[12px]"
+          >
+            <Icon icon="lucide:settings" width="16" height="16" />
+            Edit Template</button
+          >
           <div class="tooltip before:text-lg" data-tip="Save to Eagle">
-            <button on:click={onclick} class="btn btn-lg btn-primary"
-              >Save</button
+            <button
+              on:click={onclick}
+              class="btn btn-lg btn-primary text-[14px]">Save</button
             >
           </div>
         </div>
