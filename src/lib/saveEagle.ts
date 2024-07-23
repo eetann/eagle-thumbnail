@@ -16,8 +16,6 @@ async function postToEagle(
 		title: itemTitle,
 		src: imageURL,
 		url: websiteURL,
-		// TODO: annotationが無効なのか拡張機能関係なくconsoleでAPIを叩いてみる
-		// TODO: 無理ならクリップボードに入れるオプションを追加
 		annotation: annotation,
 	};
 	// annotationだけ反映されないため、存在すればクリップボードに入れる

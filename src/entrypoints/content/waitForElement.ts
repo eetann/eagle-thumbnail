@@ -4,7 +4,7 @@ export async function waitForElement(
 	return new Promise((resolve) => {
 		let elm = document.querySelector(selector);
 		if (elm) {
-			console.log("最初に見つかった");
+			// console.log("最初に見つかった");
 			return resolve(elm);
 		}
 
@@ -13,13 +13,13 @@ export async function waitForElement(
 			if (elm) {
 				clearInterval(timer);
 				clearTimeout(timeout);
-				console.log("途中で見つかった");
+				// console.log("途中で見つかった");
 				return resolve(elm);
 			}
 		}, 500);
 		const timeout = setTimeout(() => {
 			clearInterval(timer);
-			console.log("見つからなかった");
+			// console.log("見つからなかった");
 			return resolve(undefined);
 		}, 10000);
 	});

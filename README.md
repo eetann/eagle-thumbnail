@@ -39,10 +39,9 @@ Eagle may have changed its specifications. Please wait until this extension deve
 WIP
 
 # TODO
-- [ ] オプションを開くボタン版でスクショを撮る
-
+- [ ] popupでの表示(content scriptの競合や仕様変更対策)
 - [ ] 検索画面での保存
-- [ ] popupでの表示
+- [ ] 再生リストのURLパラメータを削除しないオプション
 
 - [ ] 多言語対応の動画
   - meta name="title"? それ以外は大変そう
