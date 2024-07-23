@@ -1,6 +1,8 @@
 # Thumbnail To Eagle
 Browser extension to quickly save YouTube thumbnails to [Eagle](https://eagle.cool/).
 
+[Install from Chrome Web Store](https://chromewebstore.google.com/detail/thumbnail-to-eagle/bhngfkechiolkegimnadjlcalhoigcjc)
+
 ## Features
 
 - 🖼️ Display thumbnail on YouTube video pages
@@ -35,8 +37,7 @@ Eagle may have changed its specifications. Please wait until this extension deve
 
 ## Installation
 - [Eagle](https://eagle.cool/) (recommendation)
-
-WIP
+- [This extension](https://chromewebstore.google.com/detail/thumbnail-to-eagle/bhngfkechiolkegimnadjlcalhoigcjc)
 
 # TODO
 - [ ] popupでの表示(content scriptの競合や仕様変更対策)
